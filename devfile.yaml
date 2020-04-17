@@ -31,6 +31,26 @@ components:
         name: JAVA_OPTS
       - value: $(JAVA_OPTS)
         name: MAVEN_OPTS
+  - endpoints:
+      - name: postgres
+        port: 5432
+        attributes:
+          discoverable: 'true'
+          public: 'false'
+    memoryLimit: 512Mi
+    type: dockerimage
+    volumes:
+      - name: postgre-storage
+        containerPath: /var/lib/postgres/data
+    alias: postgres
+    image: postgres
+    env:
+      - value: test_user
+        name: POSTGRESQL_USER
+      - value: password
+        name: POSTGRESQL_PASSWORD
+      - value: surveydb
+        name: POSTGRESQL_DATABASE
 commands:
   - name: maven build
     actions:
